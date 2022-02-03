@@ -1,18 +1,3 @@
-#     Copyright (C) 2020 Team-Kodi
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program. If not, see <http://www.gnu.org/licenses/>.
-#
 # -*- coding: utf-8 -*-
 
 from datetime import timedelta as datetime_timedelta
@@ -129,10 +114,11 @@ class Installer(object):
                                 entry = dict()
                                 entry.update(dict(tag='file'))
                                 entry.update(dict(name=match.rsplit('/', 1)[1]))
+                                entry.update(dict(date=match.rsplit('/', 1)[1].split('-')[2]))
                                 entry.update(dict(url=BASE_URL))
                                 entry.update(dict(data='{{"c_item[]": "download={}"}}'.format(match)))
                                 cacheResponse.get('entries').append(entry)
-                            cacheResponse.update(dict(entries=sorted(cacheResponse.get('entries'), key=lambda k: k['name'], reverse=True)))
+                            cacheResponse.update(dict(entries=sorted(cacheResponse.get('entries'), key=lambda k: k['name'].split('-', 2)[2], reverse=True)))
 
                 self.cache.set('{0}.openURL, url = {1}'.format(ADDON_NAME, url), cacheResponse, expiration=datetime_timedelta(minutes=5))
             return cacheResponse
@@ -148,7 +134,14 @@ class Installer(object):
         for entry in entries:
             if entry.get('tag') == 'file' and entry.get('name').endswith('.apk'):
                 label = entry.get('name')
-                li = xbmcgui_ListItem(label, label.split('.apk')[1], path=entry.get('url'))
+                label2 = '{}-{}-{}'.format(entry.get('date')[:4], entry.get('date')[4:6], (entry.get('date')[6:] if len(entry.get('date')) == 8 else entry.get('date')[6:8]))
+                if len(entry.get('date')) > 8:
+                    time = entry.get('date')[8:]
+                    if len(time) == 3:
+                        label2 = '{} 0{}:{}'.format(label2, time[:1], time[1:])
+                    else:
+                        label2 = '{} {}:{}'.format(label2, time[:2], time[2:])
+                li = xbmcgui_ListItem(label, label2, path=entry.get('url'))
                 li.setProperty('data', entry.get('data'))
                 li.setArt({'icon': ICON})
                 yield (li)
