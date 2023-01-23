@@ -8,7 +8,7 @@
     <extension point="xbmc.python.script" library="default.py"/>
     <extension point="xbmc.service" library="service.py" start="login"/>
     <extension point="xbmc.addon.metadata">
-		<summary lang="de">Downloader für Maven's Kodi-Builds</summary>
+        <summary lang="de">Downloader für Maven's Kodi-Builds</summary>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
         <platform>android</platform>
         <assets>

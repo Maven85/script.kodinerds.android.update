@@ -39,7 +39,9 @@ MAIN = [
     {'label': 'Matrix', 'url': '{}?action=list&scope=all&version=matrix/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi\.arm.*)"'},
     {'label': 'Matrix-FireTV', 'url': '{}?action=list&scope=all&version=matrix/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi\.firetv\.arm.*)"'},
     {'label': 'Nexus', 'url': '{}?action=list&scope=all&version=nexus/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi20\.arm.*)"'},
-    {'label': 'Nexus-FireTV', 'url': '{}?action=list&scope=all&version=nexus/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi20\.firetv\.arm.*)"'}
+    {'label': 'Nexus-FireTV', 'url': '{}?action=list&scope=all&version=nexus/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi20\.firetv\.arm.*)"'},
+    {'label': 'Omega', 'url': '{}?action=list&scope=all&version=omega/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi21\.arm.*)"'},
+    {'label': 'Omega-FireTV', 'url': '{}?action=list&scope=all&version=omega/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi21\.firetv\.arm.*)"'}
 ]
 DEBUG = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
