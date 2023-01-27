@@ -9,4 +9,5 @@
     <setting id="LastPath"            type="text"   default=""    enable="false"  visible="false"/>
     <setting id="Platform"            type="text"   default=""    enable="false"  visible="false"/>
     <setting id="Version"             type="text"   default=""    enable="false"  visible="false"/>
+    <setting id="Download_Folder"     type="folder" label="30023" default="/storage/emulated/0/download" source="auto" option="writeable"/>
 </settings>

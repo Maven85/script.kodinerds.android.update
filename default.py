@@ -14,7 +14,7 @@ from xbmc import executebuiltin as xbmc_executebuiltin, executeJSONRPC as xbmc_e
     LOGDEBUG as xbmc_LOGDEBUG, LOGERROR as xbmc_LOGERROR, Monitor as xbmc_Monitor
 from xbmcaddon import Addon as xbmcaddon_Addon
 from xbmcgui import Dialog as xbmcgui_Dialog, DialogProgress as xbmcgui_DialogProgress, ListItem as xbmcgui_ListItem
-from xbmcvfs import delete as xbmcvfs_delete, exists as xbmcvfs_exists
+from xbmcvfs import delete as xbmcvfs_delete, exists as xbmcvfs_exists, mkdir as xbmcvfs_mkdir
 
 if PY2:
     from xbmc import translatePath as xbmcvfs_translatePath
@@ -25,7 +25,6 @@ else:
 ADDON_ID = 'script.kodinerds.android.update'
 REAL_SETTINGS = xbmcaddon_Addon(id=ADDON_ID)
 ADDON_NAME = REAL_SETTINGS.getAddonInfo('name')
-SETTINGS_LOC = '/storage/emulated/0/download'
 ADDON_PATH = REAL_SETTINGS.getAddonInfo('path')
 ADDON_VERSION = REAL_SETTINGS.getAddonInfo('version')
 ICON = REAL_SETTINGS.getAddonInfo('icon')
@@ -48,6 +47,7 @@ CLEAN = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
 VERSION = REAL_SETTINGS.getSetting('Version')
 CUSTOM = (REAL_SETTINGS.getSetting('Custom_Manager') or 'com.android.documentsui')
 FMANAGER = {0:'com.android.documentsui', 1:CUSTOM}[int(REAL_SETTINGS.getSetting('File_Manager'))]
+DOWNLOAD_FOLDER = REAL_SETTINGS.getSetting('Download_Folder')
 
 
 def log(msg, level=xbmc_LOGDEBUG):
@@ -161,7 +161,8 @@ class Installer(object):
         else: select = selectDialog(ADDON_NAME, items)
         if select is None or select < 0: return  # return on cancel.
         if items[select].getProperty('data'):
-            dest = xbmcvfs_translatePath(os_path_join(SETTINGS_LOC, items[select].getLabel()))
+            if not xbmcvfs_exists(DOWNLOAD_FOLDER): xbmcvfs_mkdir(DOWNLOAD_FOLDER)
+            dest = xbmcvfs_translatePath(os_path_join(DOWNLOAD_FOLDER, items[select].getLabel()))
             REAL_SETTINGS.setSetting("LastPath", dest)
             return self.downloadAPK(items[select].getPath(), dest, items[select].getProperty('data'))
         else:
@@ -214,7 +215,7 @@ class Installer(object):
             if eta < 0: eta = divmod(0, 60)
             else: eta = divmod(eta, 60)
             total = (float(filesize) / (1024 * 1024))
-            label = '[B]Downloading: [/B] {0}'.format(os_path_join(SETTINGS_LOC, fle))
+            label = '[B]Downloading: [/B] {0}'.format(os_path_join(DOWNLOAD_FOLDER, fle))
             label2 = '{0:.02f} MB of {1:.02f} MB'.format(currently_downloaded, total)
             label2 += ' | [B]Speed:[/B] {0:.02f} Kb/s'.format(kbps_speed)
             label2 += ' | [B]ETA:[/B] {0:02d}:{1:02d}'.format(eta[0], eta[1])
