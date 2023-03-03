@@ -109,6 +109,9 @@ class Installer(object):
                     regex = url.rsplit('/', 1)[1].split('=', 1)[1]
                     if regex:
                         request = urllib.request.Request(url)
+                        response = urllib.request.urlopen(request, timeout=TIMEOUT)
+                        cookie = response.info().get_all('Set-Cookie')
+                        request.add_header("Cookie", cookie[0])
                         html = urllib.request.urlopen(request, timeout=TIMEOUT).read().decode('utf-8')
                         matches = re_findall(regex, html)
                         if matches:
