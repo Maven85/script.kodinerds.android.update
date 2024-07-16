@@ -41,7 +41,7 @@ MAIN = [
     {'label': 'Nexus-FireTV', 'url': '{}?action=list&scope=all&version=nexus/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi20\.firetv\.arm.*)"'},
     {'label': 'Omega', 'url': '{}?action=list&scope=all&version=omega/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi21\.arm.*)"'},
     {'label': 'Omega-FireTV', 'url': '{}?action=list&scope=all&version=omega/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi21\.firetv\.arm.*)"'},
-    {'label': 'Pegasus', 'url': '{}?action=list&scope=all&version=pegasus/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi22\.arm.*)"'},
+    {'label': 'Piers', 'url': '{}?action=list&scope=all&version=piers/'.format(BASE_URL), 'regex': 'download=(.*net\.kodinerds\.maven\.kodi22\.arm.*)"'},
 ]
 DEBUG = REAL_SETTINGS.getSetting('Enable_Debugging') == 'true'
 CLEAN = REAL_SETTINGS.getSetting('Disable_Maintenance') == 'false'
